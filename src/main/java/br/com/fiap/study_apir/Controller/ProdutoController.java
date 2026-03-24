@@ -1,17 +1,25 @@
-package br.com.fiap.study_apir.Controller;
+package br.com.fiap.study_apir.controller;
+
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.fiap.study_apir.model.Produto;
+import br.com.fiap.study_apir.repository.RepositoryProdutoMockup;
+
 @RestController
-@RequestMapping("/produtos")
+@RequestMapping("api/${api.version}/produtos")
 public class ProdutoController {
+
+    private RepositoryProdutoMockup mockup = new RepositoryProdutoMockup();
 
     //dois jeitos de fazer 
 
@@ -23,8 +31,13 @@ public class ProdutoController {
     
     //2 menos verboso
     @GetMapping("/{id}")
-    public ResponseEntity<String> findById() {
-        return ResponseEntity.ok("banana");
+    public ResponseEntity<Produto> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(mockup.findById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Produto>> findAll() {
+        return ResponseEntity.ok(mockup.findAll());
     }
 
     @PutMapping("/{id}")
