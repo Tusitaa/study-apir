@@ -1,6 +1,7 @@
 package br.com.fiap.study_apir.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,14 @@ public class ProdutoController {
     //2 menos verboso
     @GetMapping("/{id}")
     public ResponseEntity<Produto> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(mockup.findById(id));
+        Optional<Produto> optProduto = mockup.findById(id);
+
+        if(optProduto.isPresent()) {
+            return ResponseEntity.ok(optProduto.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     @GetMapping
