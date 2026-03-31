@@ -1,7 +1,6 @@
-package br.com.fiap.study_apir.controller;
+package br.com.fiap.study_apir.Controller;
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.fiap.study_apir.model.Produto;
 import br.com.fiap.study_apir.repository.RepositoryProdutoMockup;
+import jakarta.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("api/${api.version}/produtos")
@@ -43,8 +43,9 @@ public class ProdutoController {
         return ResponseEntity.ok("Produto Atualizado!");
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<String> delete() {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        mockup.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Produto Excluido!");
     }
 
